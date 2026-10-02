@@ -1,0 +1,800 @@
+/* ==========================================================================
+   COMPONENTS: CURSOR, LOADER, RAIL, SWITCHER, BUTTONS, STICKERS, ODOMETER
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   CUSTOM CURSOR
+   18px skewed square, 2px cream border, difference blend mode
+   Grows to 72px skewed square with directional arrow and action label
+   -------------------------------------------------------------------------- */
+.custom-cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 18px;
+  height: 18px;
+  margin-top: -9px;
+  margin-left: -9px;
+  pointer-events: none;
+  z-index: 100000;
+  mix-blend-mode: difference;
+  opacity: 0;
+  transition: width 0.22s cubic-bezier(0.16, 1, 0.3, 1),
+              height 0.22s cubic-bezier(0.16, 1, 0.3, 1),
+              margin 0.22s cubic-bezier(0.16, 1, 0.3, 1),
+              opacity 0.15s ease;
+}
+
+.cursor-box {
+  width: 100%;
+  height: 100%;
+  border: 2px solid var(--cream);
+  background: transparent;
+  transform: skewX(-12deg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
+  box-sizing: border-box;
+}
+
+.cursor-arrow {
+  display: none;
+  font-size: 14px;
+  font-weight: 900;
+  color: var(--cream);
+  line-height: 1;
+  transform-origin: center center;
+}
+
+.cursor-label {
+  display: none;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: var(--cream);
+  text-transform: uppercase;
+  margin-top: 3px;
+}
+
+.cursor-expanded {
+  width: 72px;
+  height: 72px;
+  margin-top: -36px;
+  margin-left: -36px;
+}
+
+.cursor-expanded .cursor-arrow {
+  display: block;
+}
+
+.cursor-expanded.has-label .cursor-label {
+  display: block;
+}
+
+/* Touch devices: hide custom cursor */
+@media (pointer: coarse) {
+  .custom-cursor {
+    display: none !important;
+  }
+  a, button {
+    cursor: pointer !important;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   LOADER (3-2-1 + GO DIAGONAL SPLIT)
+   -------------------------------------------------------------------------- */
+.kinetic-loader {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100svh;
+  z-index: 99999;
+  background-color: var(--ink);
+  overflow: hidden;
+  pointer-events: all;
+}
+
+.loader-badge-tag {
+  position: absolute;
+  top: 32px;
+  right: 32px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--cream);
+  background: var(--ink);
+  padding: 6px 14px;
+  border: 2px solid var(--cream);
+  letter-spacing: 0.18em;
+  z-index: 10;
+}
+
+.loader-panel {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  will-change: transform, clip-path;
+}
+
+.panel-3 {
+  background-color: var(--ink);
+  color: var(--cream);
+  z-index: 1;
+}
+
+.panel-2 {
+  background-color: #2B3FFF; /* Cobalt */
+  color: var(--cream);
+  z-index: 2;
+  transform: translateX(-100%) skewX(-12deg);
+}
+
+.panel-1 {
+  background-color: #D6FF3A; /* Volt */
+  color: var(--ink);
+  z-index: 3;
+  transform: translateX(100%) skewX(-12deg);
+}
+
+.panel-go {
+  background-color: #FF3D8B; /* Punch */
+  color: var(--ink);
+  z-index: 4;
+  transform: translateX(-100%) skewX(-12deg);
+}
+
+.loader-numeral {
+  font-family: var(--font-display);
+  font-variation-settings: 'wdth' 125, 'wght' 900;
+  font-style: italic;
+  font-size: clamp(140px, 38vw, 480px);
+  line-height: 0.8;
+  letter-spacing: -0.04em;
+  text-transform: uppercase;
+  user-select: none;
+}
+
+/* --------------------------------------------------------------------------
+   SIGNATURE COLORWAY TRANSITION OVERLAY
+   Slanted bars sweeping across the screen
+   -------------------------------------------------------------------------- */
+.colorway-transition-overlay {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100svh;
+  z-index: 8000; /* Above hero/sections, below rail (9000) and switcher (8500) */
+  pointer-events: none;
+  visibility: hidden;
+  overflow: hidden;
+}
+
+.transition-bar {
+  position: absolute;
+  top: -15vh;
+  left: -20vw;
+  width: 140vw;
+  height: 130vh;
+  transform: skewX(-12deg);
+  will-change: transform;
+}
+
+.bar-1 { z-index: 3; }
+.bar-2 { z-index: 2; }
+.bar-3 { z-index: 1; }
+
+/* --------------------------------------------------------------------------
+   RAIL NAVIGATION (Desktop: fixed left 72px)
+   -------------------------------------------------------------------------- */
+.rail-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: var(--rail-width);
+  height: 100svh;
+  background-color: var(--ink);
+  color: var(--cream);
+  border-right: 2px solid rgba(244, 241, 234, 0.2);
+  z-index: 9000;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px 0 20px;
+  transform: translateX(-100%); /* Slides in after loader */
+  user-select: none;
+}
+
+.rail-top-btn {
+  width: 40px;
+  height: 40px;
+  background-color: var(--cream);
+  color: var(--ink);
+  font-family: var(--font-display);
+  font-variation-settings: 'wdth' 125, 'wght' 900;
+  font-style: italic;
+  font-size: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--ink);
+  box-shadow: 3px 3px 0 rgba(244, 241, 234, 0.3);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.rail-top-btn:hover {
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0 rgba(244, 241, 234, 0.3);
+}
+
+.rail-links {
+  display: flex;
+  flex-direction: column;
+  gap: 36px;
+  align-items: center;
+  position: relative;
+}
+
+.rail-active-indicator {
+  position: absolute;
+  left: -14px;
+  width: 4px;
+  height: 24px;
+  background-color: var(--accent);
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), height 0.3s ease;
+  pointer-events: none;
+}
+
+.rail-link {
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  color: var(--cream);
+  opacity: 0.75;
+  display: flex;
+  align-items: center;
+  padding: 6px 2px;
+  position: relative;
+  transition: opacity 0.2s ease, transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), color 0.2s ease;
+}
+
+.rail-link::after {
+  content: '';
+  position: absolute;
+  right: -6px;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background-color: var(--accent);
+  transform: scaleY(0);
+  transform-origin: bottom;
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.rail-link:hover {
+  opacity: 1;
+  transform: rotate(180deg) translateY(-6px);
+  color: var(--accent);
+}
+
+.rail-link:hover::after, .rail-link.is-active::after {
+  transform: scaleY(1);
+}
+
+.rail-link.is-active {
+  opacity: 1;
+  color: var(--cream);
+  font-weight: 900;
+}
+
+.rail-bottom {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.rail-reserve-btn {
+  width: 48px;
+  background-color: var(--accent);
+  color: var(--ink);
+  border: 2px solid var(--ink);
+  padding: 10px 4px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.5);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.rail-reserve-btn:hover {
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.5);
+}
+
+.rail-reserve-icon {
+  font-size: 16px;
+  font-weight: 900;
+}
+
+.rail-reserve-label {
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 0.18em;
+}
+
+.rail-section-counter {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--cream);
+  opacity: 0.7;
+}
+
+/* Mobile Header & Overlay Menu (< 900px) */
+.mobile-header {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 56px;
+  background-color: var(--ink);
+  color: var(--cream);
+  border-bottom: 2px solid rgba(244, 241, 234, 0.2);
+  z-index: 9000;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+}
+
+.mobile-menu-btn {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 0.16em;
+  padding: 6px 12px;
+  border: 2px solid var(--cream);
+  background: var(--ink);
+  color: var(--cream);
+}
+
+.mobile-overlay-menu {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100svh;
+  background-color: var(--ink);
+  color: var(--cream);
+  z-index: 9500;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 32px 24px;
+  transform: translateY(-100%);
+  transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: none;
+}
+
+.mobile-overlay-menu.is-open {
+  transform: translateY(0);
+  pointer-events: all;
+}
+
+.mobile-menu-close {
+  align-self: flex-end;
+  font-family: var(--font-mono);
+  font-size: 14px;
+  font-weight: 900;
+  border: 2px solid var(--cream);
+  padding: 8px 16px;
+}
+
+.mobile-menu-links {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.mobile-menu-link {
+  font-family: var(--font-display);
+  font-variation-settings: 'wdth' 125, 'wght' 900;
+  font-style: italic;
+  font-size: clamp(40px, 12vw, 68px);
+  line-height: 0.9;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  color: var(--cream);
+  display: block;
+}
+
+.mobile-menu-link:hover, .mobile-menu-link:active {
+  color: var(--accent);
+}
+
+@media (max-width: 899px) {
+  .rail-nav {
+    display: none !important;
+  }
+  .mobile-header {
+    display: flex;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   COLORWAY SWITCHER
+   Fixed right edge above 1100px.
+   Below 1100px: collapses into a 48px square "COLORWAYS" toggle at bottom-right
+   that expands into the three squares on tap.
+   Below 900px: bottom row with safe-area padding that hides while any overlay is open.
+   While footer is in view: shrinks to 40px squares at bottom-right.
+   -------------------------------------------------------------------------- */
+.colorway-switcher {
+  position: fixed;
+  right: 24px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  z-index: 8500;
+  opacity: 0; /* Animated in after loader */
+}
+
+.colorway-toggle-btn {
+  display: none;
+}
+
+.colorway-btn {
+  width: 56px;
+  height: 56px;
+  border: 2px solid var(--ink);
+  box-shadow: 6px 6px 0 var(--ink);
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease;
+  outline: none;
+}
+
+.colorway-btn[data-cw="cobalt"] { background-color: #2B3FFF; }
+.colorway-btn[data-cw="volt"] { background-color: #D6FF3A; }
+.colorway-btn[data-cw="punch"] { background-color: #FF3D8B; }
+
+.colorway-btn:hover {
+  transform: translateX(-4px);
+  box-shadow: 4px 4px 0 var(--ink);
+}
+
+.colorway-btn.is-active {
+  transform: translateX(-8px);
+  box-shadow: 6px 6px 0 var(--ink);
+}
+
+.colorway-btn:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 4px;
+}
+
+/* Active notch */
+.colorway-btn.is-active::after {
+  content: '';
+  position: absolute;
+  right: -8px;
+  width: 6px;
+  height: 18px;
+  background-color: var(--ink);
+}
+
+/* Sliding label */
+.colorway-label-slide {
+  position: absolute;
+  right: 68px;
+  white-space: nowrap;
+  background-color: var(--ink);
+  color: var(--cream);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  padding: 6px 12px;
+  border: 2px solid var(--ink);
+  box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.4);
+  pointer-events: none;
+  opacity: 0;
+  transform: translateX(10px);
+  transition: opacity 0.2s ease, transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.colorway-btn:hover .colorway-label-slide,
+.colorway-btn.is-active .colorway-label-slide {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Below 1100px & Above 899px: collapses into a 48px square COLORWAYS toggle */
+@media (max-width: 1100px) and (min-width: 900px) {
+  .colorway-switcher {
+    right: 20px;
+    bottom: 20px;
+    top: auto;
+    transform: none;
+    flex-direction: column-reverse;
+    gap: 12px;
+    align-items: flex-end;
+  }
+
+  .colorway-toggle-btn {
+    display: flex;
+    width: 48px;
+    height: 48px;
+    border: 2px solid var(--ink);
+    background-color: var(--accent);
+    color: #0E0E10;
+    font-family: var(--font-mono);
+    font-size: 8px;
+    font-weight: 900;
+    letter-spacing: 0.05em;
+    box-shadow: 4px 4px 0 var(--ink);
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 8501;
+    outline: none;
+  }
+
+  .colorway-btn {
+    display: none;
+    width: 48px;
+    height: 48px;
+  }
+
+  .colorway-switcher.is-expanded .colorway-btn {
+    display: flex;
+  }
+
+  .colorway-btn.is-active {
+    transform: none;
+  }
+}
+
+/* Mobile: below 900px */
+@media (max-width: 899px) {
+  .colorway-switcher {
+    right: auto;
+    left: 50%;
+    top: auto;
+    bottom: 20px;
+    transform: translateX(-50%);
+    flex-direction: row;
+    gap: 12px;
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+    z-index: 8400;
+  }
+
+  .colorway-toggle-btn {
+    display: none;
+  }
+
+  .colorway-btn {
+    width: 48px;
+    height: 48px;
+    display: flex;
+  }
+
+  .colorway-btn.is-active {
+    transform: translateY(-6px);
+  }
+
+  .colorway-btn.is-active::after {
+    display: none;
+  }
+
+  .colorway-label-slide {
+    display: none;
+  }
+
+  /* Hides while any overlay is open */
+  body.scroll-locked .colorway-switcher,
+  body.overlay-open .colorway-switcher {
+    display: none !important;
+  }
+}
+
+/* While footer is in view: shrink to 40px and move to bottom-right */
+body.footer-in-view .colorway-switcher {
+  top: auto !important;
+  bottom: 20px !important;
+  right: 20px !important;
+  left: auto !important;
+  transform: none !important;
+  flex-direction: row !important;
+  gap: 8px !important;
+  z-index: 8600 !important;
+}
+
+body.footer-in-view .colorway-btn {
+  width: 40px !important;
+  height: 40px !important;
+}
+
+body.footer-in-view .colorway-label-slide {
+  display: none !important;
+}
+
+/* Mobile Overlay Colorway Stack */
+.mobile-menu-colorways {
+  display: flex;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.mobile-cw-btn {
+  flex: 1;
+  height: 44px;
+  border: 2px solid var(--cream);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--cream);
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.mobile-cw-btn[data-cw="cobalt"].is-active {
+  background-color: #2B3FFF;
+  color: #F4F1EA;
+  border-color: #2B3FFF;
+}
+
+.mobile-cw-btn[data-cw="volt"].is-active {
+  background-color: #D6FF3A;
+  color: #0E0E10;
+  border-color: #D6FF3A;
+}
+
+.mobile-cw-btn[data-cw="punch"].is-active {
+  background-color: #FF3D8B;
+  color: #0E0E10;
+  border-color: #FF3D8B;
+}
+
+/* --------------------------------------------------------------------------
+   STICKERS / BADGES
+   Hard 2px ink borders, 6px 6px 0 ink shadows, rotated angles
+   -------------------------------------------------------------------------- */
+.badge-sticker {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 16px;
+  border: 2px solid var(--ink);
+  box-shadow: var(--shadow-ink);
+  font-family: var(--font-mono);
+  font-size: clamp(11px, 1.2vw, 14px);
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  user-select: none;
+  will-change: transform;
+  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.badge-sticker:hover {
+  transform: scale(1.08) rotate(2deg) !important;
+}
+
+.sticker-accent {
+  background-color: var(--accent);
+  color: var(--ink);
+  transform: rotate(-5deg);
+}
+
+.sticker-cream {
+  background-color: var(--cream);
+  color: var(--ink);
+  transform: rotate(4deg);
+}
+
+.sticker-ink {
+  background-color: var(--ink);
+  color: var(--cream);
+  transform: rotate(-3deg);
+}
+
+/* --------------------------------------------------------------------------
+   BUTTONS (Hard press down interaction)
+   -------------------------------------------------------------------------- */
+.btn-hard {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 16px 28px;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 900;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  border: 2px solid var(--ink);
+  box-shadow: var(--shadow-ink);
+  position: relative;
+  transition: transform 0.12s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.12s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform, box-shadow;
+}
+
+.btn-hard:hover {
+  transform: translate(6px, 6px);
+  box-shadow: 0 0 0 transparent;
+}
+
+.btn-primary {
+  background-color: var(--ink);
+  color: var(--cream);
+}
+
+.btn-secondary {
+  background-color: transparent;
+  color: var(--fg);
+  border-color: var(--fg);
+  box-shadow: 6px 6px 0 var(--fg);
+}
+
+.btn-secondary:hover {
+  transform: translate(6px, 6px);
+  box-shadow: 0 0 0 transparent;
+}
+
+/* --------------------------------------------------------------------------
+   ODOMETER ROLLERS
+   -------------------------------------------------------------------------- */
+.odometer-track-wrap {
+  display: inline-flex;
+  align-items: baseline;
+  overflow: hidden;
+  line-height: 1;
+}
+
+.odometer-col {
+  display: inline-block;
+  height: 1em;
+  overflow: hidden;
+  position: relative;
+  vertical-align: baseline;
+}
+
+.odometer-strip {
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.odometer-num, .odometer-static {
+  display: inline-block;
+  height: 1em;
+  line-height: 1em;
+  text-align: center;
+}

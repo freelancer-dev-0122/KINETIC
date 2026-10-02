@@ -1,0 +1,71 @@
+/* ==========================================================================
+   KINETIC DESIGN SYSTEM - DESIGN TOKENS & VARIABLES
+   Strict Streetwear Aesthetic: No gradients, no glows, no blurs, radius 0-2px.
+   ========================================================================== */
+
+:root {
+  /* Constant Base Colors */
+  --ink: #0E0E10;
+  --cream: #F4F1EA;
+
+  /* Default Colorway: COBALT RUSH */
+  --bg: #2B3FFF;
+  --fg: #F4F1EA;
+  --title: #1F31D6;
+  --accent: #D6FF3A;
+
+  /* Borders & Shadows */
+  --border-width: 2px;
+  --border-ink: 2px solid var(--ink);
+  --border-fg: 2px solid var(--fg);
+  --shadow-offset: 6px;
+  --shadow-ink: 6px 6px 0 var(--ink);
+  --shadow-cream: 6px 6px 0 var(--cream);
+  --shadow-accent: 6px 6px 0 var(--accent);
+  --shadow-pressed: 0 0 0 transparent;
+
+  /* Geometry */
+  --radius: 0px;
+  --radius-subtle: 2px;
+
+  /* Typography */
+  --font-display: 'Archivo', -apple-system, sans-serif;
+  --font-body: 'Space Grotesk', -apple-system, sans-serif;
+  --font-mono: 'Space Mono', monospace;
+
+  /* 8px Base Grid Scale */
+  --space-1: 8px;
+  --space-2: 16px;
+  --space-3: 24px;
+  --space-4: 32px;
+  --space-5: 40px;
+  --space-6: 48px;
+  --space-8: 64px;
+  --space-10: 80px;
+  --space-12: 96px;
+
+  /* Layout dimensions */
+  --rail-width: 72px;
+}
+
+/* Explicit colorway data attributes */
+html[data-colorway="cobalt"] {
+  --bg: #2B3FFF;
+  --fg: #F4F1EA;
+  --title: #1F31D6;
+  --accent: #D6FF3A;
+}
+
+html[data-colorway="volt"] {
+  --bg: #D6FF3A;
+  --fg: #0E0E10;
+  --title: #BFE81F;
+  --accent: #2B3FFF;
+}
+
+html[data-colorway="punch"] {
+  --bg: #FF3D8B;
+  --fg: #0E0E10;
+  --title: #E82A78;
+  --accent: #F4F1EA;
+}

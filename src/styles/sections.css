@@ -1,0 +1,474 @@
+/* ==========================================================================
+   SECTIONS: HERO, MARQUEE RIBBON, ANCHOR PLACEHOLDERS
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   HERO CONTAINER
+   100svh, bg var(--bg), padding-left 72px (desktop rail), hard diagonal cut
+   -------------------------------------------------------------------------- */
+.hero-section {
+  position: relative;
+  width: 100%;
+  height: 100svh;
+  min-height: 640px;
+  background-color: var(--bg);
+  padding-left: var(--rail-width);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  clip-path: polygon(0 0, 100% 0, 100% calc(100% - 4vh), 0 100%);
+  user-select: none;
+}
+
+@media (max-width: 899px) {
+  .hero-section {
+    padding-left: 0;
+    padding-top: 56px;
+    height: auto;
+    min-height: 100svh;
+    clip-path: polygon(0 0, 100% 0, 100% calc(100% - 3vh), 0 100%);
+  }
+}
+
+/* --------------------------------------------------------------------------
+   HERO TOP ROW (Header info & Countdown)
+   -------------------------------------------------------------------------- */
+.hero-top-row {
+  position: relative;
+  z-index: 50;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 32px 48px 0 40px;
+  gap: 24px;
+}
+
+.hero-meta-badge {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.hero-model-tag {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--fg);
+  letter-spacing: 0.14em;
+}
+
+.hero-tagline {
+  font-family: var(--font-body);
+  font-size: clamp(14px, 1.4vw, 18px);
+  font-weight: 700;
+  color: var(--fg);
+  opacity: 0.9;
+}
+
+/* Countdown Card */
+.drop-countdown-card {
+  background-color: var(--cream);
+  color: var(--ink);
+  border: 2px solid var(--ink);
+  box-shadow: var(--shadow-ink);
+  padding: 12px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: center;
+}
+
+.countdown-header-tag {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 0.16em;
+  color: var(--ink);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.countdown-live-dot {
+  width: 8px;
+  height: 8px;
+  background-color: #FF3D8B;
+  border-radius: 0;
+  display: inline-block;
+  animation: pulse-dot 1s steps(2, start) infinite;
+}
+
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.2; }
+}
+
+.countdown-cells {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.countdown-cell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.countdown-num {
+  font-family: var(--font-mono);
+  font-size: clamp(18px, 2vw, 24px);
+  font-weight: 900;
+  line-height: 1;
+}
+
+.countdown-unit {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  font-weight: 700;
+  opacity: 0.75;
+  margin-top: 2px;
+}
+
+.countdown-sep {
+  font-family: var(--font-mono);
+  font-size: 16px;
+  font-weight: 900;
+  opacity: 0.5;
+}
+
+/* --------------------------------------------------------------------------
+   HERO CENTER STAGE: TITLE & SHOE
+   -------------------------------------------------------------------------- */
+.hero-center-stage {
+  position: absolute;
+  inset: 0;
+  left: var(--rail-width);
+  width: calc(100% - var(--rail-width));
+  height: 100%;
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 20;
+}
+
+@media (max-width: 899px) {
+  .hero-center-stage {
+    position: relative;
+    inset: auto;
+    left: 0;
+    width: 100%;
+    height: 480px;
+    margin: 20px 0;
+  }
+}
+
+/* Giant "KINETIC" Title */
+.hero-title-wrap {
+  position: absolute;
+  top: 42%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: calc(100% - 64px);
+  max-width: 1400px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.hero-title-base, .hero-title-outline {
+  position: absolute;
+  width: 100%;
+  text-align: center;
+  font-family: var(--font-display);
+  font-variation-settings: 'wdth' 125, 'wght' 900;
+  font-style: italic;
+  text-transform: uppercase;
+  letter-spacing: -0.03em;
+  line-height: 0.82;
+  white-space: nowrap;
+  user-select: none;
+}
+
+.hero-title-base {
+  color: var(--title);
+  z-index: 12;
+}
+
+.hero-title-outline {
+  color: transparent;
+  -webkit-text-stroke: 2px var(--fg);
+  z-index: 11;
+  transform: translate(14px, 14px);
+  will-change: transform;
+}
+
+/* Shoe & Float Wrapper */
+.shoe-stage-wrap {
+  position: absolute;
+  top: 48%;
+  left: 52%;
+  transform: translate(-50%, -50%);
+  width: clamp(340px, 74%, 1050px);
+  aspect-ratio: 16 / 9;
+  z-index: 25;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  perspective: 1200px;
+}
+
+@media (max-width: 899px) {
+  .shoe-stage-wrap {
+    top: 50%;
+    left: 50%;
+    width: 110vw;
+  }
+}
+
+.shoe-interactive-wrap {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: all;
+  cursor: none;
+  transform-style: preserve-3d;
+}
+
+/* Ground shadow ellipse */
+.shoe-ground-shadow {
+  position: absolute;
+  bottom: 8%;
+  left: 20%;
+  width: 65%;
+  height: 38px;
+  background-color: var(--ink);
+  opacity: 0.35;
+  border-radius: 50%;
+  filter: none; /* Strict NO BLUR rule */
+  transform: scaleY(0.4) rotate(-5deg);
+  transition: transform 0.2s ease, opacity 0.2s ease;
+  pointer-events: none;
+}
+
+/* Shoe image layers */
+.shoe-img-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform: rotate(-10deg);
+  will-change: transform;
+}
+
+.shoe-main-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  z-index: 5;
+  filter: drop-shadow(4px 10px 0 var(--ink));
+  will-change: transform;
+}
+
+/* Ghost copies trailing on entry & transition */
+.shoe-ghost {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  pointer-events: none;
+  z-index: 2;
+  display: none;
+}
+
+.ghost-1 { opacity: 0.40; }
+.ghost-2 { opacity: 0.25; }
+.ghost-3 { opacity: 0.12; }
+
+/* --------------------------------------------------------------------------
+   STICKERS POSITIONING (Hero Badges)
+   -------------------------------------------------------------------------- */
+.stickers-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 45;
+}
+
+.sticker-pos-1 {
+  position: absolute;
+  top: 18%;
+  left: 12%;
+  pointer-events: all;
+}
+
+.sticker-pos-2 {
+  position: absolute;
+  top: 26%;
+  right: 14%;
+  pointer-events: all;
+}
+
+.sticker-pos-3 {
+  position: absolute;
+  bottom: 22%;
+  right: 22%;
+  pointer-events: all;
+}
+
+@media (max-width: 899px) {
+  .sticker-pos-1 {
+    top: 6%;
+    left: 4%;
+    transform: scale(0.85) rotate(-5deg) !important;
+  }
+  .sticker-pos-2 {
+    top: 8%;
+    right: 4%;
+    transform: scale(0.85) rotate(4deg) !important;
+  }
+  .sticker-pos-3 {
+    bottom: 8%;
+    right: 6%;
+    transform: scale(0.85) rotate(-3deg) !important;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   HERO BOTTOM ROW (CTA Buttons)
+   -------------------------------------------------------------------------- */
+.hero-bottom-row {
+  position: relative;
+  z-index: 50;
+  padding: 0 48px 48px 40px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+@media (max-width: 899px) {
+  .hero-top-row {
+    flex-direction: column;
+    padding: 16px 20px 0;
+    gap: 16px;
+  }
+
+  .hero-bottom-row {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 0 20px 48px;
+    gap: 14px;
+  }
+
+  .hero-bottom-row .btn-hard {
+    width: 100%;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   DIAGONAL MARQUEE RIBBON
+   Straddles the bottom edge of hero, rotated -3.5deg, continuous loop
+   -------------------------------------------------------------------------- */
+.ribbon-wrap {
+  position: relative;
+  width: 110vw;
+  left: -5vw;
+  background-color: var(--ink);
+  color: var(--cream);
+  transform: rotate(-3.5deg) translateY(-24px);
+  z-index: 55;
+  overflow: hidden;
+  padding: 14px 0;
+  border-top: 2px solid var(--cream);
+  border-bottom: 2px solid var(--cream);
+  user-select: none;
+  margin-bottom: -16px;
+}
+
+.ribbon-track {
+  display: flex;
+  white-space: nowrap;
+  width: fit-content;
+  will-change: transform;
+}
+
+.ribbon-item {
+  font-family: var(--font-display);
+  font-variation-settings: 'wdth' 125, 'wght' 900;
+  font-style: italic;
+  font-size: clamp(20px, 2.4vw, 32px);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 0 24px;
+  display: inline-flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.ribbon-bullet {
+  color: var(--accent);
+  font-size: 1.2em;
+}
+
+/* --------------------------------------------------------------------------
+   PLACEHOLDER SECTIONS FOR ANCHOR TARGETS (#drop, #tech, #gallery, #reserve)
+   -------------------------------------------------------------------------- */
+.placeholder-section {
+  min-height: 40svh;
+  width: 100%;
+  background-color: var(--bg);
+  color: var(--fg);
+  border-top: 2px solid var(--ink);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-left: calc(var(--rail-width) + 40px);
+  padding-right: 40px;
+  position: relative;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+@media (max-width: 899px) {
+  .placeholder-section {
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+}
+
+.placeholder-tag {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  color: var(--fg);
+  opacity: 0.5;
+  margin-bottom: 8px;
+}
+
+.placeholder-heading {
+  font-family: var(--font-display);
+  font-variation-settings: 'wdth' 125, 'wght' 900;
+  font-style: italic;
+  font-size: clamp(36px, 6vw, 72px);
+  line-height: 0.9;
+  letter-spacing: -0.02em;
+  color: var(--title);
+}
+
+.placeholder-desc {
+  font-family: var(--font-body);
+  font-size: 15px;
+  font-weight: 500;
+  max-width: 500px;
+  margin-top: 12px;
+  opacity: 0.8;
+}

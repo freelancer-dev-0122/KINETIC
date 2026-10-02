@@ -1,0 +1,918 @@
+/* ==========================================================================
+   SECTION: THE DROP (PART A: MANIFESTO, PART B: THE RUN, PART C: RESERVATIONS)
+   Strict brutalist streetwear aesthetic: hard 2px ink borders, 6px offset shadows,
+   no gradients, no glows, no blurs, no rounded corners.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   CONTAINER & SECTION LEVEL
+   -------------------------------------------------------------------------- */
+.drop-section {
+  position: relative;
+  width: 100%;
+  background-color: var(--bg);
+  color: var(--fg);
+  overflow: visible; /* Required so pinned container works without ancestor overflow issues */
+}
+
+/* --------------------------------------------------------------------------
+   PART A: MANIFESTO (Normal Flow)
+   -------------------------------------------------------------------------- */
+.manifesto-wrap {
+  position: relative;
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 160px 48px 120px;
+  padding-left: calc(var(--rail-width) + 48px);
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+}
+
+@media (max-width: 899px) {
+  .manifesto-wrap {
+    padding: 100px 20px 80px;
+  }
+}
+
+.manifesto-badge-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.manifesto-tag {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  color: var(--fg);
+}
+
+.manifesto-statement {
+  font-family: var(--font-display);
+  font-variation-settings: 'wdth' 125, 'wght' 900;
+  font-style: italic;
+  font-size: clamp(56px, 9vw, 150px);
+  line-height: 0.88;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+  color: var(--fg);
+  will-change: transform;
+}
+
+.manifesto-statement .tone-on-tone {
+  color: var(--title);
+  -webkit-text-stroke: 1px rgba(14, 14, 16, 0.2);
+}
+
+.manifesto-lower-row {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  gap: 48px;
+  margin-top: 16px;
+}
+
+@media (max-width: 1024px) {
+  .manifesto-lower-row {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+}
+
+/* Rotated Stats Band (-2deg) */
+.manifesto-stats-band {
+  display: inline-grid;
+  grid-template-columns: repeat(4, auto);
+  background-color: var(--cream);
+  color: var(--ink);
+  border: 2px solid var(--ink);
+  box-shadow: var(--shadow-ink);
+  transform: rotate(-2deg);
+  will-change: transform;
+}
+
+@media (max-width: 640px) {
+  .manifesto-stats-band {
+    grid-template-columns: repeat(2, 1fr);
+    transform: rotate(0deg);
+  }
+}
+
+.stat-cell {
+  padding: 16px 24px;
+  border-right: 2px solid var(--ink);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.stat-cell:last-child {
+  border-right: none;
+}
+
+@media (max-width: 640px) {
+  .stat-cell:nth-child(2) {
+    border-right: none;
+  }
+  .stat-cell:nth-child(1), .stat-cell:nth-child(2) {
+    border-bottom: 2px solid var(--ink);
+  }
+}
+
+.stat-val-wrap {
+  font-family: var(--font-display);
+  font-variation-settings: 'wdth' 125, 'wght' 900;
+  font-style: italic;
+  font-size: clamp(26px, 2.5vw, 36px);
+  line-height: 0.95;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+}
+
+.stat-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  opacity: 0.75;
+}
+
+/* Manifesto Narrative block */
+.manifesto-narrative-block {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-width: 44ch;
+  justify-self: end;
+}
+
+@media (max-width: 1024px) {
+  .manifesto-narrative-block {
+    justify-self: start;
+  }
+}
+
+.manifesto-para {
+  font-family: var(--font-body);
+  font-size: clamp(15px, 1.25vw, 18px);
+  font-weight: 700;
+  line-height: 1.4;
+  color: var(--fg);
+}
+
+.manifesto-tech-link {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 0.14em;
+  color: var(--fg);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  width: fit-content;
+  border-bottom: 2px solid var(--fg);
+  padding-bottom: 2px;
+  transition: transform 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+
+.manifesto-tech-link:hover {
+  transform: translateX(4px);
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+/* --------------------------------------------------------------------------
+   PART B: THE RUN (Pinned Container, ~500vh scroll)
+   -------------------------------------------------------------------------- */
+.the-run-pin-section {
+  position: relative;
+  width: 100%;
+  height: 500vh; /* Pinned distance for scrub timeline */
+  background-color: #0E0E10; /* Base Ink */
+  clip-path: polygon(0 4vh, 100% 0, 100% 100%, 0 calc(100% - 4vh));
+}
+
+.run-stage-viewport {
+  position: sticky;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100svh;
+  overflow: hidden;
+  background-color: #0E0E10;
+  color: var(--cream);
+  padding-left: var(--rail-width);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+@media (max-width: 899px) {
+  .the-run-pin-section {
+    height: auto;
+    clip-path: none;
+    background-color: transparent;
+  }
+  .run-stage-viewport {
+    position: relative;
+    height: auto;
+    padding-left: 0;
+    overflow: visible;
+  }
+}
+
+/* Dynamic Background Wipe Layer (sweeps at 0.25-0.35 and 0.6-0.7) */
+.run-bg-wipe-layer {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--bg);
+  z-index: 1;
+  clip-path: polygon(0 0, 0 0, 0 100%, 0 100%);
+  will-change: clip-path;
+  pointer-events: none;
+}
+
+/* Giant Background Outlined Chapter Number (50vw, Archivo 900 italic) */
+.run-giant-num-bg {
+  position: absolute;
+  top: 48%;
+  left: 8%;
+  transform: translateY(-50%);
+  font-family: var(--font-display);
+  font-variation-settings: 'wdth' 125, 'wght' 900;
+  font-style: italic;
+  font-size: clamp(240px, 46vw, 680px);
+  line-height: 0.75;
+  letter-spacing: -0.04em;
+  color: transparent;
+  -webkit-text-stroke: 2px var(--title);
+  opacity: 0.35;
+  z-index: 2;
+  pointer-events: none;
+  user-select: none;
+  will-change: transform, opacity;
+}
+
+/* Speed Lines streaming right to left behind shoe */
+.run-speedlines-container {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 3;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.speed-line {
+  position: absolute;
+  height: 3px;
+  background-color: var(--accent);
+  opacity: 0.15;
+  transform: skewX(-20deg);
+  will-change: transform, opacity;
+}
+
+.speed-line.line-cream {
+  background-color: var(--cream);
+  opacity: 0.10;
+}
+
+/* --------------------------------------------------------------------------
+   THE RUN: SHOE ACTOR & MOTION PATH
+   -------------------------------------------------------------------------- */
+.run-shoe-actor-wrap {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: clamp(380px, 58vw, 840px);
+  aspect-ratio: 16 / 9;
+  z-index: 15;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  will-change: transform;
+}
+
+.run-shoe-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.run-shoe-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  z-index: 5;
+  filter: drop-shadow(6px 12px 0 #0E0E10);
+  pointer-events: all;
+  will-change: transform;
+}
+
+.run-ghost {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  pointer-events: none;
+  z-index: 2;
+  will-change: transform, opacity;
+}
+
+.run-ghost-1 { opacity: 0.40; }
+.run-ghost-2 { opacity: 0.25; }
+.run-ghost-3 { opacity: 0.12; }
+
+/* Colorway change flash sweep bar across shoe */
+.run-shoe-flash-bar {
+  position: absolute;
+  top: -10%;
+  left: -20%;
+  width: 140%;
+  height: 120%;
+  background-color: var(--accent);
+  transform: skewX(-14deg) translateX(-150%);
+  z-index: 20;
+  pointer-events: none;
+  display: none;
+}
+
+/* --------------------------------------------------------------------------
+   HOTSPOTS (Children of shoe wrapper, follow its transform)
+   -------------------------------------------------------------------------- */
+.run-hotspots-layer {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 30;
+  pointer-events: none;
+}
+
+.hotspot-node {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  opacity: 0;
+  transform: scale(0.6);
+  pointer-events: all;
+  transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform, opacity;
+}
+
+.hotspot-node.is-active {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.hotspot-marker {
+  position: relative;
+  width: 14px;
+  height: 14px;
+  background-color: var(--accent);
+  border: 2px solid #0E0E10;
+  box-shadow: 2px 2px 0 #0E0E10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 2;
+}
+
+.hotspot-pulse-ring {
+  position: absolute;
+  inset: -6px;
+  border: 2px solid var(--accent);
+  animation: pulse-hotspot 1.6s cubic-bezier(0.2, 0.8, 0.2, 1) infinite;
+  pointer-events: none;
+}
+
+@keyframes pulse-hotspot {
+  0% { transform: scale(0.7); opacity: 1; }
+  100% { transform: scale(2.0); opacity: 0; }
+}
+
+.hotspot-connector {
+  position: absolute;
+  background-color: #0E0E10;
+  z-index: 1;
+}
+
+.hotspot-tag-box {
+  background-color: #0E0E10;
+  color: var(--cream);
+  border: 2px solid var(--cream);
+  box-shadow: 4px 4px 0 #0E0E10;
+  padding: 6px 12px;
+  white-space: nowrap;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  z-index: 3;
+}
+
+/* Side alignments */
+.hotspot-side-top {
+  flex-direction: column-reverse;
+  align-items: center;
+  transform-origin: bottom center;
+}
+.hotspot-side-top .hotspot-connector {
+  width: 2px;
+  height: 24px;
+}
+
+.hotspot-side-bottom {
+  flex-direction: column;
+  align-items: center;
+  transform-origin: top center;
+}
+.hotspot-side-bottom .hotspot-connector {
+  width: 2px;
+  height: 24px;
+}
+
+/* Debug Mode Coordinates Overlay */
+.hotspot-debug-coords {
+  position: absolute;
+  top: 18px;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  background: red;
+  color: white;
+  padding: 2px 4px;
+  display: none;
+}
+body.debug-hotspots .hotspot-node {
+  opacity: 1 !important;
+  transform: scale(1) !important;
+}
+body.debug-hotspots .hotspot-debug-coords {
+  display: block;
+}
+
+/* --------------------------------------------------------------------------
+   CHAPTERS PRESENTATION (Discrete Char Reveal, Opposite to Shoe)
+   -------------------------------------------------------------------------- */
+.run-chapters-wrap {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 25;
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.chapter-pane {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-width: 42%;
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+  will-change: transform, opacity;
+}
+
+.chapter-pane.pane-active {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: all;
+}
+
+/* Dynamic positioning opposite to shoe: 24px+ clear of rail and stage edges */
+.chapter-pos-right {
+  right: 40px;
+  left: auto;
+  text-align: left;
+}
+
+.chapter-pos-left {
+  left: calc(var(--rail-width) + 32px);
+  right: auto;
+  text-align: left;
+}
+
+.chapter-mono-tag {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  color: var(--accent);
+}
+
+.chapter-headline {
+  font-family: var(--font-display);
+  font-variation-settings: 'wdth' 125, 'wght' 900;
+  font-style: italic;
+  font-size: clamp(32px, 4.2vw, 76px);
+  line-height: 0.92;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+  color: inherit;
+}
+
+.chapter-body {
+  font-family: var(--font-body);
+  font-size: clamp(15px, 1.2vw, 18px);
+  font-weight: 700;
+  line-height: 1.4;
+  opacity: 0.9;
+  max-width: 44ch;
+}
+
+.chapter-spec-chip {
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 16px;
+  border: 2px solid currentColor;
+  box-shadow: 4px 4px 0 #0E0E10;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 900;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  margin-top: 8px;
+}
+
+/* --------------------------------------------------------------------------
+   THE RUN HUD: DISTANCE & RACE TRACK
+   -------------------------------------------------------------------------- */
+.run-hud-top {
+  position: absolute;
+  top: 32px;
+  right: 48px;
+  z-index: 40;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.run-distance-card {
+  background-color: var(--cream);
+  color: #0E0E10;
+  border: 2px solid #0E0E10;
+  box-shadow: 5px 5px 0 #0E0E10;
+  padding: 10px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  align-items: flex-end;
+}
+
+.run-distance-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  opacity: 0.7;
+}
+
+.run-distance-odometer-wrap {
+  font-family: var(--font-mono);
+  font-size: 24px;
+  font-weight: 900;
+  line-height: 1;
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+}
+
+.run-chapter-name-badge {
+  background-color: #0E0E10;
+  color: var(--accent);
+  border: 2px solid var(--accent);
+  padding: 10px 16px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  box-shadow: 4px 4px 0 #0E0E10;
+}
+
+/* Bottom Race Track */
+.run-hud-bottom {
+  position: absolute;
+  bottom: 28px;
+  left: calc(var(--rail-width) + 32px);
+  right: 32px;
+  z-index: 40;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.race-track-line-wrap {
+  position: relative;
+  width: 100%;
+  height: 2px;
+  background-color: rgba(244, 241, 234, 0.3);
+}
+
+.race-track-progress-fill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  background-color: var(--accent);
+  width: 0%;
+  will-change: width;
+}
+
+.race-track-shoe-cursor {
+  position: absolute;
+  top: 50%;
+  left: 0%;
+  width: 20px;
+  height: 20px;
+  transform: translate(-50%, -50%);
+  background-color: var(--accent);
+  border: 2px solid #0E0E10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  color: #0E0E10;
+  font-weight: 900;
+  will-change: left;
+}
+
+.race-track-ticks-row {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.race-tick-btn {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  color: rgba(244, 241, 234, 0.7);
+  transition: color 0.15s ease, transform 0.15s ease;
+  position: relative;
+  padding: 4px 2px;
+}
+
+.race-tick-btn:hover {
+  color: var(--accent);
+  transform: translateY(-2px);
+}
+
+.race-tick-btn.tick-active {
+  color: var(--accent);
+  font-weight: 900;
+}
+
+.race-tick-btn::before {
+  content: '';
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  width: 2px;
+  height: 8px;
+  background-color: rgba(244, 241, 234, 0.4);
+  transform: translateX(-50%);
+}
+
+.race-tick-btn.tick-active::before {
+  background-color: var(--accent);
+  height: 12px;
+}
+
+/* --------------------------------------------------------------------------
+   PART C: LIVE RESERVATIONS STRIP (Normal Flow)
+   -------------------------------------------------------------------------- */
+.reservations-strip-wrap {
+  position: relative;
+  width: 100%;
+  background-color: var(--bg);
+  color: var(--fg);
+  padding: 80px 48px;
+  padding-left: calc(var(--rail-width) + 48px);
+  clip-path: polygon(0 3vh, 100% 0, 100% 100%, 0 100%);
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+@media (max-width: 899px) {
+  .reservations-strip-wrap {
+    padding: 60px 20px;
+  }
+}
+
+.reservations-main-grid {
+  display: grid;
+  grid-template-columns: 360px 1fr auto;
+  align-items: center;
+  gap: 40px;
+  max-width: 1400px;
+}
+
+@media (max-width: 1180px) {
+  .reservations-main-grid {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+}
+
+/* Counter Card */
+.res-counter-card {
+  background-color: var(--cream);
+  color: #0E0E10;
+  border: 2px solid #0E0E10;
+  box-shadow: var(--shadow-ink);
+  padding: 24px 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.res-card-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  opacity: 0.7;
+}
+
+.res-odometer-wrap {
+  font-family: var(--font-display);
+  font-variation-settings: 'wdth' 125, 'wght' 900;
+  font-style: italic;
+  font-size: clamp(38px, 4vw, 56px);
+  line-height: 0.9;
+  letter-spacing: -0.02em;
+  color: #0E0E10;
+}
+
+/* Live Toast Feed (Max 3 visible) */
+.res-toast-feed {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  height: 140px;
+  overflow: hidden;
+}
+
+.res-toast-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  background-color: #0E0E10;
+  color: var(--cream);
+  border: 2px solid var(--cream);
+  box-shadow: 4px 4px 0 #0E0E10;
+  padding: 10px 18px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  will-change: transform, opacity;
+}
+
+.res-toast-color-swatch {
+  width: 10px;
+  height: 10px;
+  border: 1px solid #0E0E10;
+}
+
+.res-action-btn-wrap {
+  display: flex;
+  align-items: center;
+}
+
+/* Footer micro-details line */
+.reservations-meta-line {
+  border-top: 2px solid var(--fg);
+  padding-top: 20px;
+  max-width: 1400px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  color: var(--fg);
+  opacity: 0.85;
+}
+
+/* --------------------------------------------------------------------------
+   MOBILE (< 900px) & REDUCED MOTION STACKED LAYOUT
+   No pin, no scrub, clean stacked chapter cards with alternating background
+   -------------------------------------------------------------------------- */
+.mobile-chapters-stack {
+  display: none;
+  flex-direction: column;
+  width: 100%;
+}
+
+@media (max-width: 899px) {
+  .the-run-pin-section {
+    display: none !important;
+  }
+  .mobile-chapters-stack {
+    display: flex;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .the-run-pin-section {
+    display: none !important;
+  }
+  .mobile-chapters-stack {
+    display: flex;
+  }
+  .manifesto-statement {
+    transform: none !important;
+  }
+}
+
+.mobile-chapter-card {
+  width: 100%;
+  padding: 64px 20px 48px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  border-top: 2px solid var(--ink);
+}
+
+.card-bg-ink {
+  background-color: #0E0E10;
+  color: var(--cream);
+}
+
+.card-bg-colorway {
+  background-color: var(--bg);
+  color: var(--fg);
+}
+
+.mobile-chapter-shoe-box {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mobile-chapter-shoe-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.mobile-hotspots-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.mobile-hotspot-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.mobile-hotspot-bullet {
+  width: 10px;
+  height: 10px;
+  background-color: var(--accent);
+  border: 1px solid #0E0E10;
+}

@@ -451,8 +451,17 @@ export function initDropSection() {
   const mm = gsap.matchMedia();
 
   // Desktop Pinning (> 899px and not reduced-motion)
+  const mobileChaptersStack = dropSection.querySelector('.mobile-chapters-stack');
+
   mm.add('(min-width: 900px)', () => {
-    if (isReducedMotion()) return;
+    if (isReducedMotion()) {
+      if (pinSection) pinSection.setAttribute('aria-hidden', 'true');
+      if (mobileChaptersStack) mobileChaptersStack.setAttribute('aria-hidden', 'false');
+      return;
+    }
+
+    if (pinSection) pinSection.setAttribute('aria-hidden', 'false');
+    if (mobileChaptersStack) mobileChaptersStack.setAttribute('aria-hidden', 'true');
 
     // Set initial chapter visible
     switchChapter(0, 1);
@@ -480,6 +489,9 @@ export function initDropSection() {
   // MOBILE (< 900px) & REDUCED MOTION: STACKED CHAPTERS LAYOUT
   // --------------------------------------------------------------------------
   mm.add('(max-width: 899px)', () => {
+    if (pinSection) pinSection.setAttribute('aria-hidden', 'true');
+    if (mobileChaptersStack) mobileChaptersStack.setAttribute('aria-hidden', 'false');
+
     const mobileCards = dropSection.querySelectorAll('.mobile-chapter-card');
     mobileCards.forEach((card, idx) => {
       const shoeBox = card.querySelector('.mobile-chapter-shoe-img');

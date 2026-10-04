@@ -519,9 +519,18 @@
   border-color: #F4F1EA;
 }
 
-.form-input:focus {
+.form-input:focus,
+.form-input:focus-visible {
   border-color: var(--accent);
   box-shadow: 0 0 0 2px var(--accent);
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+@media (max-width: 768px) {
+  .form-input {
+    font-size: 16px;
+  }
 }
 
 .form-row-2col {
@@ -1337,10 +1346,12 @@
     padding: 24px;
   }
   .reserve-size-grid {
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(auto-fill, minmax(44px, 1fr));
   }
   .reserve-size-btn {
     height: 44px;
+    min-width: 44px;
+    min-height: 44px;
   }
   .drop-pass-card {
     flex-direction: column;

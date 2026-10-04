@@ -34,7 +34,7 @@ export const TECH_LAYERS = [
     id: 'layer-carbon-plate',
     name: '03 CARBON PLATE',
     title: 'BIFURCATED SPOON CHASSIS',
-    description: 'Pre-impregnated 3K carbon composite tuned for 89.4% kinetic energy return per stride cycle.',
+    description: 'Pre-impregnated 3K carbon composite tuned for 38% kinetic energy return per stride cycle.',
     spec: '1 FULL-LENGTH PLATE',
     specValue: '1',
     specUnit: 'PLATE',

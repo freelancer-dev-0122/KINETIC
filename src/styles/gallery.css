@@ -463,7 +463,7 @@
   position: fixed;
   inset: 0;
   width: 100vw;
-  height: 100svh;
+  height: 100dvh;
   background-color: var(--ink);
   color: var(--cream);
   z-index: 99990; /* Below cursor (100000), above rail & switcher */
@@ -587,6 +587,42 @@
   align-items: center;
   gap: 8px;
   cursor: pointer;
+}
+
+@media (max-width: 640px) {
+  .gallery-lightbox-modal {
+    padding: 16px;
+    height: 100dvh;
+    box-sizing: border-box;
+  }
+  .lightbox-stage {
+    min-height: 0;
+  }
+  .lightbox-enlarged-img {
+    max-width: 95%;
+    max-height: 48dvh;
+  }
+  .lightbox-arrow-btn {
+    width: 40px;
+    height: 40px;
+    font-size: 18px;
+  }
+  .lightbox-btn-prev { left: 4px; }
+  .lightbox-btn-next { right: 4px; }
+  .lightbox-bottom-bar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    padding-top: 12px;
+  }
+  .lightbox-caption-text {
+    font-size: 13px;
+    line-height: 1.3;
+  }
+  .lightbox-use-cw-btn {
+    width: 100%;
+    justify-content: center;
+  }
 }
 
 /* --------------------------------------------------------------------------
@@ -1006,12 +1042,14 @@
 
 @media (max-width: 640px) {
   .size-buttons-grid {
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(auto-fill, minmax(44px, 1fr));
   }
 }
 
 .size-square-btn {
   height: 48px;
+  min-width: 44px;
+  min-height: 44px;
   background-color: var(--cream);
   color: var(--ink);
   border: 2px solid var(--ink);

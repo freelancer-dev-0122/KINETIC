@@ -91,7 +91,7 @@
   position: fixed;
   inset: 0;
   width: 100vw;
-  height: 100svh;
+  height: 100dvh;
   z-index: 99999;
   background-color: var(--ink);
   overflow: hidden;
@@ -199,7 +199,7 @@
   top: 0;
   left: 0;
   width: var(--rail-width);
-  height: 100svh;
+  height: 100dvh;
   background-color: var(--ink);
   color: var(--cream);
   border-right: 2px solid rgba(244, 241, 234, 0.2);
@@ -379,7 +379,7 @@
   position: fixed;
   inset: 0;
   width: 100vw;
-  height: 100svh;
+  height: 100dvh;
   background-color: var(--ink);
   color: var(--cream);
   z-index: 9500;

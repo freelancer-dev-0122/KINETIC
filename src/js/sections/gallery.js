@@ -271,24 +271,6 @@ export function initGallerySection() {
   let activeLightboxIndex = 0;
   let lastFocusedElement = null;
 
-  // Scroll Lock Manager with guaranteed release
-  let scrollLockCounter = 0;
-  function lockScroll() {
-    scrollLockCounter++;
-    if (lenis) lenis.stop();
-    document.body.style.overflow = 'hidden';
-    document.body.style.paddingRight = `${window.innerWidth - document.documentElement.clientWidth}px`;
-  }
-
-  function unlockScroll() {
-    scrollLockCounter = Math.max(0, scrollLockCounter - 1);
-    if (scrollLockCounter === 0) {
-      if (lenis) lenis.start();
-      document.body.style.overflow = '';
-      document.body.style.paddingRight = '';
-    }
-  }
-
   function openLightbox(index) {
     activeLightboxIndex = index;
     const cardData = GALLERY_CARDS[index];
@@ -404,7 +386,7 @@ export function initGallerySection() {
 
   // Guaranteed release safety nets
   window.addEventListener('resize', () => { if (lightboxModal?.classList.contains('is-open')) closeLightbox(); });
-  window.addEventListener('pagehide', unlockScroll);
+  window.addEventListener('pagehide', () => { if (lightboxModal?.classList.contains('is-open')) closeLightbox(); });
   document.addEventListener('visibilitychange', () => { if (document.hidden && lightboxModal?.classList.contains('is-open')) closeLightbox(); });
 
   // --------------------------------------------------------------------------
@@ -561,11 +543,16 @@ export function initGallerySection() {
       btn.classList.toggle('is-recommended', isRecommended);
       btn.classList.toggle('is-selected', isSelected);
 
+      btn.setAttribute('aria-label', `US size ${sizeVal.toFixed(1)}`);
+      btn.setAttribute('aria-pressed', isSelected ? 'true' : 'false');
+      btn.setAttribute('aria-checked', isSelected ? 'true' : 'false');
+
       // Deterministic stock state
       const stock = stockFor(sizeVal, activeColorwayId);
       const youTag = btn.querySelector('.size-you-tag');
       if (youTag) {
         youTag.style.display = isRecommended ? 'block' : 'none';
+        youTag.setAttribute('aria-hidden', 'true');
       }
 
       if (stock.status === 'SOLD_OUT') {

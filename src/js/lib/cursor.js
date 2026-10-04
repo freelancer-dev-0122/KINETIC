@@ -66,37 +66,32 @@ export function initCustomCursor() {
     cursorEl.style.opacity = '1';
   });
 
-  // Handle interactive hover targets
-  function bindHoverTargets() {
-    const interactives = document.querySelectorAll('[data-cursor], a, button, .magnetic, .shoe-interactive-wrap');
-    interactives.forEach(el => {
-      el.addEventListener('mouseenter', () => {
-        isHovered = true;
-        cursorEl.classList.add('cursor-expanded');
-        const customText = el.getAttribute('data-cursor') || (el.tagName === 'A' ? 'OPEN' : (el.tagName === 'BUTTON' ? 'VIEW' : ''));
-        if (customText) {
-          cursorLabel.textContent = customText;
-          cursorEl.classList.add('has-label');
-        } else {
-          cursorLabel.textContent = '';
-          cursorEl.classList.remove('has-label');
-        }
-      });
+  // Handle interactive hover targets with single delegated event listeners
+  document.addEventListener('pointerover', (e) => {
+    const target = e.target.closest('[data-cursor], a, button, .magnetic, .shoe-interactive-wrap');
+    if (!target) return;
 
-      el.addEventListener('mouseleave', () => {
-        isHovered = false;
-        cursorEl.classList.remove('cursor-expanded');
-        cursorEl.classList.remove('has-label');
-        cursorLabel.textContent = '';
-      });
-    });
-  }
-
-  bindHoverTargets();
-
-  // Rebind dynamically if DOM updates
-  const observer = new MutationObserver(() => {
-    bindHoverTargets();
+    isHovered = true;
+    cursorEl.classList.add('cursor-expanded');
+    const customText = target.getAttribute('data-cursor') || (target.tagName === 'A' ? 'OPEN' : (target.tagName === 'BUTTON' ? 'VIEW' : ''));
+    if (customText) {
+      cursorLabel.textContent = customText;
+      cursorEl.classList.add('has-label');
+    } else {
+      cursorLabel.textContent = '';
+      cursorEl.classList.remove('has-label');
+    }
   });
-  observer.observe(document.body, { childList: true, subtree: true });
+
+  document.addEventListener('pointerout', (e) => {
+    const target = e.target.closest('[data-cursor], a, button, .magnetic, .shoe-interactive-wrap');
+    if (!target) return;
+    // Check if moving to an element within the same interactive container
+    if (e.relatedTarget && target.contains(e.relatedTarget)) return;
+
+    isHovered = false;
+    cursorEl.classList.remove('cursor-expanded');
+    cursorEl.classList.remove('has-label');
+    cursorLabel.textContent = '';
+  });
 }

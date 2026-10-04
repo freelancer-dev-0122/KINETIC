@@ -2,7 +2,7 @@ import { gsap } from 'gsap';
 import { getImage } from '../lib/images.js';
 import { getCurrentColorway } from '../lib/theme.js';
 import { onScrollVelocity, getScrollVelocity } from '../lib/scroll.js';
-import { Odometer, splitTextMasked, isReducedMotion } from '../lib/utils.js';
+import { Odometer, splitTextMasked, isReducedMotion, DROP_DATE } from '../lib/utils.js';
 
 export function initHeroSection() {
   const heroEl = document.querySelector('.hero-section');
@@ -205,26 +205,30 @@ export function initHeroSection() {
   });
 
   // --------------------------------------------------------------------------
-  // 5. DROP COUNTDOWN (TARGET = NOW + 12D 6H 30M)
-  // In-memory target so demo never expires; ticks every second with Odometer
+  // 5. DROP COUNTDOWN (TARGET = DROP_DATE: 2026-10-31T10:00:00)
+  // Live countdown updating every second, clamped at 0, showing "DROP LIVE" when done
   // --------------------------------------------------------------------------
-  const targetDate = new Date(Date.now() + (12 * 24 * 3600 + 6 * 3600 + 30 * 60) * 1000);
-
   const daysEl = document.querySelector('.countdown-days');
   const hoursEl = document.querySelector('.countdown-hours');
   const minsEl = document.querySelector('.countdown-mins');
   const secsEl = document.querySelector('.countdown-secs');
   const tagEl = document.querySelector('.countdown-header-tag');
 
-  const daysOdo = daysEl ? new Odometer(daysEl, { initialValue: '12' }) : null;
-  const hoursOdo = hoursEl ? new Odometer(hoursEl, { initialValue: '06' }) : null;
-  const minsOdo = minsEl ? new Odometer(minsEl, { initialValue: '30' }) : null;
+  const daysOdo = daysEl ? new Odometer(daysEl, { initialValue: '00' }) : null;
+  const hoursOdo = hoursEl ? new Odometer(hoursEl, { initialValue: '00' }) : null;
+  const minsOdo = minsEl ? new Odometer(minsEl, { initialValue: '00' }) : null;
   const secsOdo = secsEl ? new Odometer(secsEl, { initialValue: '00' }) : null;
 
   function updateCountdown() {
-    const diff = targetDate.getTime() - Date.now();
+    const diff = Math.max(0, DROP_DATE.getTime() - Date.now());
     if (diff <= 0) {
-      if (tagEl) tagEl.textContent = 'LIVE NOW';
+      if (tagEl) {
+        tagEl.innerHTML = '<span class="countdown-live-dot"></span><span>DROP LIVE</span>';
+      }
+      if (daysOdo) daysOdo.setValue('00');
+      if (hoursOdo) hoursOdo.setValue('00');
+      if (minsOdo) minsOdo.setValue('00');
+      if (secsOdo) secsOdo.setValue('00');
       return;
     }
 
@@ -250,7 +254,7 @@ export function initHeroSection() {
   // --------------------------------------------------------------------------
   let ribbonPos = 0;
   gsap.ticker.add((time, deltaTime) => {
-    if (!ribbonTrack || document.hidden) return;
+    if (!ribbonTrack || document.hidden || isReducedMotion()) return;
     const baseSpeed = 1.2;
     const velSpeed = Math.abs(getScrollVelocity()) * 0.08;
     const dtFactor = (deltaTime || 16.6) / 16.6;

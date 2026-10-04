@@ -153,6 +153,7 @@ export function initRailNav() {
     mobileMenu.classList.add('is-open');
     mobileMenu.setAttribute('aria-hidden', 'false');
     mobileMenu.removeAttribute('inert');
+    if (mobileMenuBtn) mobileMenuBtn.setAttribute('aria-expanded', 'true');
     document.body.classList.add('overlay-open');
     ScrollLockManager.lock(mobileMenu);
 
@@ -169,6 +170,7 @@ export function initRailNav() {
     mobileMenu.classList.remove('is-open');
     mobileMenu.setAttribute('aria-hidden', 'true');
     mobileMenu.setAttribute('inert', '');
+    if (mobileMenuBtn) mobileMenuBtn.setAttribute('aria-expanded', 'false');
     document.body.classList.remove('overlay-open');
     ScrollLockManager.unlock(mobileMenu);
   }

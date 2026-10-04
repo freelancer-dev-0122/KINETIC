@@ -27,13 +27,13 @@ export function runLoader() {
       resolve();
     };
 
-    // 6-second failsafe to guarantee loader exits even on slow network
+    // 4-second failsafe to guarantee loader exits even on slow network
     const failsafeTimeout = setTimeout(() => {
       if (!hasExited) {
-        console.warn('Loader 6s failsafe triggered.');
+        console.warn('Loader 4s failsafe triggered.');
         finishLoader();
       }
-    }, 6000);
+    }, 4000);
 
     // Wait for document.fonts.ready before starting visual sequence
     try {

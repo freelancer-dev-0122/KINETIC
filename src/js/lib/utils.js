@@ -1,5 +1,7 @@
 import { gsap } from 'gsap';
 
+export const DROP_DATE = new Date('2026-10-31T10:00:00');
+
 /**
  * Checks for user reduced-motion preference
  */
@@ -25,48 +27,30 @@ export function initMagneticButtons() {
   magneticElements.forEach((el) => {
     let bounds = null;
 
-    const updateBounds = () => {
+    el.addEventListener('mouseenter', () => {
       bounds = el.getBoundingClientRect();
-    };
+    });
 
-    window.addEventListener('scroll', updateBounds, { passive: true });
-    window.addEventListener('resize', updateBounds);
-    updateBounds();
-
-    const handleMouseMove = (e) => {
-      if (!bounds) updateBounds();
+    el.addEventListener('mousemove', (e) => {
+      if (!bounds) bounds = el.getBoundingClientRect();
       const centerX = bounds.left + bounds.width / 2;
       const centerY = bounds.top + bounds.height / 2;
 
       const dx = e.clientX - centerX;
       const dy = e.clientY - centerY;
-      const distance = Math.hypot(dx, dy);
+      const pullFactor = 0.35;
 
-      const maxRadius = 80;
-
-      if (distance < maxRadius) {
-        const pullFactor = (1 - distance / maxRadius) * 0.45;
-        gsap.to(el, {
-          x: dx * pullFactor,
-          y: dy * pullFactor,
-          duration: 0.25,
-          ease: 'power2.out',
-          overwrite: 'auto'
-        });
-      } else {
-        gsap.to(el, {
-          x: 0,
-          y: 0,
-          duration: 0.5,
-          ease: 'elastic.out(1, 0.4)',
-          overwrite: 'auto'
-        });
-      }
-    };
-
-    window.addEventListener('mousemove', handleMouseMove, { passive: true });
+      gsap.to(el, {
+        x: dx * pullFactor,
+        y: dy * pullFactor,
+        duration: 0.25,
+        ease: 'power2.out',
+        overwrite: 'auto'
+      });
+    });
 
     el.addEventListener('mouseleave', () => {
+      bounds = null;
       gsap.to(el, {
         x: 0,
         y: 0,

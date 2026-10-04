@@ -1002,6 +1002,44 @@
   }
 }
 
+@media (max-width: 480px) {
+  .lab-cards-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  .tilt-card-perspective {
+    height: auto;
+    min-height: 320px;
+  }
+  .tilt-depth-metric {
+    font-size: clamp(38px, 9vw, 54px);
+  }
+  .race-track-box {
+    padding: 24px 16px 20px;
+  }
+  .race-track-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  .race-live-telemetry {
+    width: 100%;
+    justify-content: space-between;
+    gap: 8px;
+  }
+  .race-timer-badge {
+    font-size: 15px;
+    padding: 2px 8px;
+  }
+  .race-gap-badge {
+    font-size: 12px;
+  }
+  .race-lanes-wrap {
+    margin: 20px 0;
+    gap: 24px;
+  }
+}
+
 .btn-race-trigger {
   background-color: var(--accent);
   color: var(--ink);

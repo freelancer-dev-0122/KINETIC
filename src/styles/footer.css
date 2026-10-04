@@ -250,8 +250,18 @@
   box-sizing: border-box;
 }
 
-.drop-alert-input:focus {
+.drop-alert-input:focus,
+.drop-alert-input:focus-visible {
   border-color: var(--accent);
+  box-shadow: 0 0 0 2px var(--accent);
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+@media (max-width: 768px) {
+  .drop-alert-input {
+    font-size: 16px;
+  }
 }
 
 .btn-drop-notify {

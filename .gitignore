@@ -12,6 +12,27 @@ dist
 dist-ssr
 *.local
 
+# Environment & credentials
+.env
+.env.*
+!.env.example
+
+# Agent / local assistant metadata & configs
+.agent/
+.agents/
+.gemini/
+.gsd/
+adapters/
+GSD-STYLE.md
+PROJECT_RULES.md
+VERSION
+model_capabilities.yaml
+
+# Local scripts
+scripts/search_*
+scripts/setup_*
+scripts/validate-*
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
@@ -22,3 +43,5 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+Thumbs.db
+

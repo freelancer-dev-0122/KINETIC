@@ -1,7 +1,7 @@
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { getLenis, onScrollVelocity, getScrollVelocity } from '../lib/scroll.js';
-import { Odometer, isReducedMotion, splitTextMasked } from '../lib/utils.js';
+import { Odometer, isReducedMotion, splitTextMasked, DROP_DATE } from '../lib/utils.js';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -65,9 +65,6 @@ export function initFooterSection() {
   // --------------------------------------------------------------------------
   // 3. MINI DROP COUNTDOWN (Ticking with Odometers, identical target to hero)
   // --------------------------------------------------------------------------
-  // Target = now + 12 days 6 hours 30 mins
-  const targetDate = new Date(Date.now() + (12 * 24 * 3600 + 6 * 3600 + 30 * 60) * 1000);
-
   const cdDays = footerEl.querySelector('.mini-cd-days');
   const cdHours = footerEl.querySelector('.mini-cd-hours');
   const cdMins = footerEl.querySelector('.mini-cd-mins');
@@ -75,16 +72,20 @@ export function initFooterSection() {
   const cdTag = footerEl.querySelector('.mini-cd-status-tag');
   const chipCdText = footerEl.querySelector('.footer-chip-cd-text');
 
-  const daysOdo = cdDays ? new Odometer(cdDays, { initialValue: '12' }) : null;
-  const hoursOdo = cdHours ? new Odometer(cdHours, { initialValue: '06' }) : null;
-  const minsOdo = cdMins ? new Odometer(cdMins, { initialValue: '30' }) : null;
+  const daysOdo = cdDays ? new Odometer(cdDays, { initialValue: '00' }) : null;
+  const hoursOdo = cdHours ? new Odometer(cdHours, { initialValue: '00' }) : null;
+  const minsOdo = cdMins ? new Odometer(cdMins, { initialValue: '00' }) : null;
   const secsOdo = cdSecs ? new Odometer(cdSecs, { initialValue: '00' }) : null;
 
   function updateFooterCountdown() {
-    const diff = targetDate.getTime() - Date.now();
+    const diff = Math.max(0, DROP_DATE.getTime() - Date.now());
     if (diff <= 0) {
-      if (cdTag) cdTag.textContent = 'LIVE NOW';
-      if (chipCdText) chipCdText.textContent = '● DROP LIVE NOW';
+      if (cdTag) cdTag.textContent = 'DROP LIVE';
+      if (chipCdText) chipCdText.textContent = '● DROP LIVE';
+      if (daysOdo) daysOdo.setValue('00');
+      if (hoursOdo) hoursOdo.setValue('00');
+      if (minsOdo) minsOdo.setValue('00');
+      if (secsOdo) secsOdo.setValue('00');
       return;
     }
 

@@ -1,6 +1,15 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
-  <rect width="64" height="64" fill="#0E0E10"/>
-  <rect x="3" y="3" width="58" height="58" fill="none" stroke="#F4F1EA" stroke-width="2"/>
-  <polygon points="16,14 26,14 26,50 16,50" fill="#D6FF3A"/>
-  <polygon points="26,30 38,14 50,14 34,34 50,50 38,50 26,36" fill="#F4F1EA"/>
+  <!-- Dark carbon background -->
+  <rect width="64" height="64" fill="#0E0E10" rx="4"/>
+  <!-- Sharp race border -->
+  <rect x="2" y="2" width="60" height="60" fill="none" stroke="#2B3FFF" stroke-width="2.5" rx="3"/>
+  <!-- High-octane kinetic slash / K symbol in Volt & Cream -->
+  <!-- K Stem in Kinetic Volt -->
+  <polygon points="14,12 24,12 24,52 14,52" fill="#D6FF3A"/>
+  <!-- Upper diagonal in Cream -->
+  <polygon points="26,30 40,12 52,12 35,33" fill="#F4F1EA"/>
+  <!-- Lower diagonal in Kinetic Pulse Red -->
+  <polygon points="34,31 52,52 40,52 26,35" fill="#E63B2E"/>
+  <!-- Speed notch -->
+  <polygon points="46,6 54,6 50,12 42,12" fill="#D6FF3A"/>
 </svg>

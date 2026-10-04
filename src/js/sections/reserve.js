@@ -206,6 +206,8 @@ export function initReserveSection() {
       btn.type = 'button';
       btn.className = `reserve-size-btn ${isSelected ? 'is-selected' : ''}`;
       btn.setAttribute('role', 'radio');
+      btn.setAttribute('aria-label', `US size ${s.toFixed(1)}`);
+      btn.setAttribute('aria-pressed', isSelected ? 'true' : 'false');
       btn.setAttribute('aria-checked', isSelected ? 'true' : 'false');
       btn.setAttribute('data-size', s);
       btn.disabled = isSoldOut;
@@ -286,9 +288,11 @@ export function initReserveSection() {
       const s = parseFloat(btn.getAttribute('data-size'));
       if (s === state.size) {
         btn.classList.add('is-selected');
+        btn.setAttribute('aria-pressed', 'true');
         btn.setAttribute('aria-checked', 'true');
       } else {
         btn.classList.remove('is-selected');
+        btn.setAttribute('aria-pressed', 'false');
         btn.setAttribute('aria-checked', 'false');
       }
     });
